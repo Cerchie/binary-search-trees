@@ -76,13 +76,18 @@ class BinarySearchTree {
   find(val, current = this.root) {
     
     while (current){
+
       if (current.val === val){
         return current;
+
       } else  {
+
        return current = (val >= current.val) ? current.right 
                                       :(val <= current.val) ? current.left
                                       :undefined;
-      } } }
+              }
+          } 
+     }
     //this is my own version. Doesn't return undefined because the chained operator doesn't work the way I want it to.
 
 
@@ -106,36 +111,97 @@ class BinarySearchTree {
    * Return an array of visited nodes. */
 
   dfsPreOrder() {
+    let data = [];
+    let current = this.root;
 
+    function traverse(node) {
+      data.push(node.val); // visit
+      node.left && traverse(node.left); // go left if there's a left
+      node.right && traverse(node.right); // go right if there's a right
+    }
+
+    traverse(current);
+    return data;
   }
 
   /** dfsInOrder(): Traverse the array using in-order DFS.
    * Return an array of visited nodes. */
 
   dfsInOrder() {
+    let data = [];
+    let current = this.root;
 
+    function traverse(node) {
+      
+      node.left && traverse(node.left); // go left if there's a left
+      data.push(node.val); // visit
+      node.right && traverse(node.right); // go right if there's a right
+    }
+
+    traverse(current);
+    return data;
   }
 
   /** dfsPostOrder(): Traverse the array using post-order DFS.
    * Return an array of visited nodes. */
 
   dfsPostOrder() {
+    let data = [];
+    let current = this.root;
 
+    function traverse(node) {
+      
+      node.left && traverse(node.left); // go left if there's a left
+
+      node.right && traverse(node.right); // go right if there's a right
+      data.push(node.val); // visit
+    }
+
+    traverse(current);
+    return data;
   }
 
   /** bfs(): Traverse the array using BFS.
    * Return an array of visited nodes. */
 
   bfs() {
+    let node = this.root;
+    let queue = [];
+    let data = [];
 
+    queue.push(node);
+
+    while (queue.length) {
+      node = queue.shift();
+      data.push(node.val);
+      if (node.left) {
+        queue.push(node.left);
+      }
+      if (node.right) {
+        queue.push(node.right);
+      }
+    }
+
+    return data;
   }
 
   /** Further Study!
    * remove(val): Removes a node in the BST with the value val.
    * Returns the removed node. */
 
-  remove(val) {
+  remove(val, current = this.root) {
+    // while (current){
 
+    //   if (current.val === val){
+    //     return current;
+
+    //   } else  {
+
+    //    return current = (val >= current.val) ? current.right 
+    //                                   :(val <= current.val) ? current.left
+    //                                   :undefined;
+    //           }
+    //       } 
   }
 
   /** Further Study!
