@@ -46,32 +46,60 @@ class BinarySearchTree {
   /** insertRecursively(val): insert a new node into the BST with value val.
    * Returns the tree. Uses recursion. */
 
-  insertRecursively(val) {
-    if(this.root === null){
-      this.root === new Node(val);
+  insertRecursively(val, current = this.root) {
+    // If the tree is empty, insert at the root
+    if (this.root === null) {
+      this.root = new Node(val);
       return this;
     }
-    let current = this.root;
-    if(val < current.val){
-      current.left = this.insertRecursively(current.left)
-    } else if (val > current.val){
-      current.right = this.insertRecursively(current.right)
+
+    if (val < current.val) {
+      if (current.left === null) {
+        current.left = new Node(val);
+        return this;
+      }
+      return this.insertRecursively(val, current.left);
+    } else {
+      if (current.right === null) {
+        current.right = new Node(val);
+        return this;
+      }
+      return this.insertRecursively(val, current.right);
     }
-    return this.root;
   }
+  
+  
 
   /** find(val): search the tree for a node with value val.
    * return the node, if found; else undefined. Uses iteration. */
 
-  find(val) {
+  find(val, current = this.root) {
+    
+    while (current){
+      if (current.val === val){
+        return current;
+      } else  {
+       return current = (val >= current.val) ? current.right 
+                                      :(val <= current.val) ? current.left
+                                      :undefined;
+      } } }
+    //this is my own version. Doesn't return undefined because the chained operator doesn't work the way I want it to.
 
-  }
 
   /** findRecursively(val): search the tree for a node with value val.
    * return the node, if found; else undefined. Uses recursion. */
 
-  findRecursively(val) {
+  findRecursively(val, current = this.root) {
+    if (this.root === null) return undefined;
 
+    if (val < current.val) {
+      if (current.left === null) return undefined;
+      return this.findRecursively(val, current.left);
+    } else if (val > current.val) {
+      if (current.right === null) return undefined;
+      return this.findRecursively(val, current.right);
+    }
+    return current;
   }
 
   /** dfsPreOrder(): Traverse the array using pre-order DFS.
