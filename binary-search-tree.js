@@ -14,15 +14,50 @@ class BinarySearchTree {
   /** insert(val): insert a new node into the BST with value val.
    * Returns the tree. Uses iteration. */
 
+  
   insert(val) {
+    // If the tree is empty, insert at the root
+    if (this.root === null) {
+      this.root = new Node(val);
+      return this;
+    }
 
+    // Otherwise, find the correct spot for the new node.
+    var current = this.root;
+    while (true) {
+      if (val < current.val) {
+        if (current.left === null) {
+          current.left = new Node(val);
+          return this;
+        } else {
+          current = current.left;
+        }
+      } else if (val > current.val) {
+        if (current.right === null) {
+          current.right = new Node(val);
+          return this;
+        } else {
+          current = current.right;
+        }
+      }
+    }
   }
 
   /** insertRecursively(val): insert a new node into the BST with value val.
    * Returns the tree. Uses recursion. */
 
   insertRecursively(val) {
-
+    if(this.root === null){
+      this.root === new Node(val);
+      return this;
+    }
+    let current = this.root;
+    if(val < current.val){
+      current.left = this.insertRecursively(current.left)
+    } else if (val > current.val){
+      current.right = this.insertRecursively(current.right)
+    }
+    return this.root;
   }
 
   /** find(val): search the tree for a node with value val.
